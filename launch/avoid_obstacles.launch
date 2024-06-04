@@ -1,0 +1,8 @@
+<launch>
+    <arg name="world" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world)"/>
+    </include>
+
+    <node name="turtlebot3_avoid_obstacles" pkg="turtlebot3_avoid_obstacles" type="avoid_obstacles.py" output="screen"/>
+</launch>
