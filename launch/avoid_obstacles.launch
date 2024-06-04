@@ -4,5 +4,5 @@
         <arg name="world_name" value="$(arg world)"/>
     </include>
 
-    <node name="turtlebot3_avoid_obstacles" pkg="turtlebot3_avoid_obstacles" type="avoid_obstacles.py" output="screen"/>
+    <node name="turtlebot3_controller" pkg="turtlebot3_controller" type="avoid_obstacles.py" output="screen"/>
 </launch>
