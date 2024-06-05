@@ -1,8 +1,13 @@
 <launch>
-    <arg name="world" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(arg world)"/>
+    <!-- Set the TurtleBot3 model environment variable -->
+    <env name="TURTLEBOT3_MODEL" value="waffle"/>
+
+    <!-- Include TurtleBot3 world launch file -->
+    <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch">
+        <arg name="model" value="$(env TURTLEBOT3_MODEL)"/>
     </include>
 
+    <!-- Start the obstacle avoidance node -->
+    <!-- <node name="turtlebot3_controller" pkg="turtlebot3_controller" type="avoid_obstacles.py" output="screen"/> -->
     <node name="turtlebot3_controller" pkg="turtlebot3_controller" type="avoid_obstacles.py" output="screen"/>
 </launch>
