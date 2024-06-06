@@ -31,10 +31,12 @@ class ObstacleAvoider:
         self.goal = MoveBaseGoal()
         rospy.spin()
 
-    def linear_ctl_rumba_move(self, ranges):
+    def linear_ctl_rumba_move(self, data):
         '''Simple Rumba ctl method for controlling robots movements from a list of ranges. 
         Assumes: 0th index is directly infront with 360 measurements evenly spread around robot, +ve index direction is same as +ve rotation direction about z axis'''
         # Find average across 10 measurements spanning 10deg in desired directions
+        # Swap infinity values for the range_max which better suits linear_ctl_rumba_move function
+        ranges = [r if not math.isinf(r) else data.range_max for r in data.ranges]
         ranges_front = ranges[:5] + ranges[-5:]
         range_front = sum(ranges_front)/len(ranges_front)
         ranges_front_right = ranges[-50:-40]
@@ -73,10 +75,8 @@ class ObstacleAvoider:
 
     def scan_callback(self, data):
         '''LaserScan callback function which then calls a movement'''
-
-        # Swap infinity values for the range_max which better suits linear_ctl_rumba_move function
-        linear_ctl_ranges = [r if not math.isinf(r) else data.range_max for r in data.ranges]
-        self.linear_ctl_rumba_move(linear_ctl_ranges)        
+        pass
+        # self.linear_ctl_rumba_move(data)        
 
 
     def publish_vel(self, msg_type="move"):
