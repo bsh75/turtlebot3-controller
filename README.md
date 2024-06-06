@@ -11,6 +11,8 @@ This project demonstrates a simple obstacle avoidance behavior for TurtleBot3 us
 - catkin workspace setup if not:
     mkdir -p ~/catkin_ws/src
     cd ~/catkin_ws/src
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git into catkin_ws/src
+
 
 ## Add to .bashrc file (or run each time a new terminal is opened)
 source /opt/ros/noetic/setup.bash
