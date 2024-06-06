@@ -1,0 +1,24 @@
+<launch>
+  <!-- Argument for TurtleBot3 Model -->
+  <arg name="model" default="burger"/>
+  
+  <!-- Set environment variable for TurtleBot3 Model -->
+  <env name="TURTLEBOT3_MODEL" value="$(arg model)"/>
+  
+  <!-- Include TurtleBot3 Gazebo launch file -->
+  <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch">
+  </include>
+
+  <!-- Include gmapping launch file -->
+  <include file="$(find turtlebot3_slam)/launch/turtlebot3_slam.launch">
+    <arg name="slam_methods" value="gmapping"/>
+  </include>
+
+  <!-- Include move_base launch file -->
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
+  </include>
+
+  <!-- Start custom made python3 node -->
+  <node name="turtlebot3_controller" pkg="turtlebot3_controller" type="explore_map.py" output="screen"/>
+
+</launch>

@@ -75,8 +75,8 @@ class ObstacleAvoider:
 
     def scan_callback(self, data):
         '''LaserScan callback function which then calls a movement'''
-        # pass
-        self.linear_ctl_rumba_move(data)        
+        pass
+        # self.linear_ctl_rumba_move(data)        
 
 
     def publish_vel(self, msg_type="move"):
