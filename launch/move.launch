@@ -1,0 +1,17 @@
+<launch>
+
+    <!-- Include gmapping launch file -->
+    <include file="$(find turtlebot3_slam)/launch/turtlebot3_slam.launch">
+        <arg name="slam_methods" value="gmapping"/>
+    </include>
+
+
+    <!-- Include move_base -->
+    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
+        <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+        <!-- Add other necessary parameters -->
+    </node>
+    
+    <!-- Start the obstacle avoidance node -->
+    <node name="turtlebot3_controller" pkg="turtlebot3_controller" type="move.py" output="screen"/>
+</launch>
