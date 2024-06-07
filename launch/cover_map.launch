@@ -1,0 +1,40 @@
+<launch>
+    <!-- Set the TurtleBot3 model environment variable -->
+    <env name="TURTLEBOT3_MODEL" value="waffle"/>
+
+    <!-- Include TurtleBot3 world launch file -->
+    <!-- <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch">
+        <arg name="model" value="$(env TURTLEBOT3_MODEL)"/>
+    </include> -->
+    
+
+    <!-- Include gmapping launch file -->
+    <include file="$(find turtlebot3_slam)/launch/turtlebot3_slam.launch">
+        <arg name="slam_methods" value="gmapping"/>
+    </include>
+    
+    <!-- Map node -->
+    <arg name="map_file" default="$(env HOME)/map.yaml"/>
+
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+    <param name="frame_id" value="map"/>  </node>
+
+    <!-- amcl node -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <param name="use_map_topic" value="true"/> 
+    <param name="odom_model_type" value="diff"/>  
+    <param name="base_frame_id" value="base_footprint"/>
+    <param name="odom_frame_id" value="odom"/>
+    <param name="global_frame_id" value="map"/>
+    
+    </node>
+
+    <!-- Include move_base -->
+    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
+        <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+        <!-- Add other necessary parameters -->
+    </node>
+    
+    <!-- Start the obstacle avoidance node -->
+    <node name="turtlebot3_controller" pkg="turtlebot3_controller" type="cover_map.py" output="screen"/>
+</launch>
