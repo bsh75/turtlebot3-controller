@@ -48,9 +48,12 @@ class GoalSetter:
         goal.target_pose.pose.position.x = x
         goal.target_pose.pose.position.y = y
         goal.target_pose.pose.orientation.w = 1.0
-        self.move_base_client.send_goal(goal, done_cb=self.goal_done_callback)
+        self.move_base_client.send_goal(goal, done_cb=self.goal_done_callback, feedback_cb=self.goal_feedback)
         rospy.loginfo(f"New goal: {goal} sent to move_base")
 
+    def goal_feedback(self, feedback):
+        # Call back function executed when goal is set
+        rospy.loginfo(f"Timer: {self.timer}")
 
     def goal_done_callback(self, state, result):
         # Callback function to be executed when the goal is done (reached or aborted)
